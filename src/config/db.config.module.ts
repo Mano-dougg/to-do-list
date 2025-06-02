@@ -19,6 +19,7 @@ dotenv.config();
         autoLoadEntities: true,
         synchronize: true,
         logging: true,
+        timezone: 'America/Sao_Paulo',
       }),
     }),
   ],
