@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import { User } from 'src/user/user.entity';
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ dotenv.config();
         username: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
-        entities: [],
+        entities: [User],
         autoLoadEntities: true,
         synchronize: true,
         logging: true,
