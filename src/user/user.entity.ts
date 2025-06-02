@@ -1,10 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Task } from "src/task/task.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("users")
 export class User {
-
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
     
     @Column({ nullable: false })
     name: string;
@@ -15,6 +15,9 @@ export class User {
     @Column({ nullable: false })
     password: string;
 
-    @Column({ type: 'date', default: () => 'CURRENT_DATE' })
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
+
+    @OneToMany(() => Task, task => task.userId, { cascade: true })
+    tasks: Task[];
 }
