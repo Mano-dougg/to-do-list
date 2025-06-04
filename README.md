@@ -19,34 +19,54 @@ Este projeto foi desenvolvido utilizando o framework NestJS, uma estrutura progr
 ## 2. Setup do projeto
 
 ```bash
-# Instalar dependências
+# Instalar dependências (necessário apenas quando rodar a aplicação localmente)
 $ npm install
+```
 
-# Iniciar banco de dados com Docker
-$ docker-compose up -d
-
-# Configurar variáveis de ambiente
-# Crie um arquivo .env na raiz do projeto com base no .env.example:
-# DB_HOST=localhost
-# DB_USER=postgres
-# DB_PASSWORD=postgres
-# DB_NAME=todo_db
-# JWTSECRET=seu_segredo_jwt
+### Configuração de variáveis de ambiente
+Crie um arquivo `.env` na raiz do projeto com base no exemplo abaixo:
+```
+DB_HOST=db            # Use 'db' para Docker completo ou 'localhost' para app local
+DB_USER=myuser        # Usuário do banco de dados
+DB_PASSWORD=mypassword # Senha do banco de dados
+DB_NAME=todoDB        # Nome do banco de dados
+JWTSECRET=mysecret    # Segredo para geração de tokens JWT
 ```
 
 ## 3. Como executar
 
+Há duas maneiras de executar o projeto:
+
+### Opção 1: Executar tudo com Docker (aplicação e banco de dados)
 ```bash
-# Desenvolvimento
+# Inicia tanto a aplicação quanto o banco de dados em containers Docker
+$ docker-compose up --build
+
+# Para rodar em segundo plano
+$ docker-compose up -d
+```
+
+### Opção 2: Executar apenas o banco de dados com Docker
+```bash
+# Inicia apenas o banco de dados em container Docker
+$ docker-compose up db
+
+# Em outro terminal, inicie a aplicação localmente
 $ npm run start
 
-# Modo watch (desenvolvimento)
+# ou no modo de desenvolvimento com hot reload
 $ npm run start:dev
 
-# Modo produção
+# ou para produção
 $ npm run start:prod
+```
 
-# Executar migrações do banco de dados
+**Importante:** Se você escolher a Opção 2, lembre-se de ajustar o `DB_HOST` no arquivo `.env`:
+- Para Opção 1 (tudo com Docker): `DB_HOST=db`
+- Para Opção 2 (banco com Docker, app local): `DB_HOST=localhost`
+
+```bash
+# Executar migrações do banco de dados (quando necessário)
 $ npm run migration:run
 ```
 
@@ -128,6 +148,7 @@ src/
 ├── common/             # Utilitários, filtros, guards
 └── main.ts             # Ponto de entrada da aplicação
 docker-compose.yml      # Configuração do Docker para o banco de dados
+Dockerfile              # Configuração para build da aplicação no Docker
 ```
 
 ## Recursos originais do NestJS
