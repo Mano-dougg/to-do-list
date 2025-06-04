@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { TaskStatus } from "./enums/taskStatus";
 import { User } from "src/user/user.entity";
 
@@ -9,7 +9,7 @@ export class Task {
 
   @ManyToOne(() => User, user => user.tasks, { nullable: false })
   @JoinColumn({ name: 'user_id' })
-  userId: string;
+  user: User;
   
   @Column({ nullable: false })
   title: string;
@@ -23,9 +23,9 @@ export class Task {
   @Column({ type: 'timestamp', nullable: true })
   dueDate: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @UpdateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 }

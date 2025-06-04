@@ -1,5 +1,5 @@
 import { Task } from "src/task/task.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity("users")
 export class User {
@@ -15,9 +15,9 @@ export class User {
     @Column({ nullable: false })
     password: string;
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
 
-    @OneToMany(() => Task, task => task.userId, { cascade: true })
+    @OneToMany(() => Task, task => task.user, { cascade: true })
     tasks: Task[];
 }
